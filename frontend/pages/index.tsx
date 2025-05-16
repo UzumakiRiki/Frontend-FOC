@@ -34,3 +34,19 @@ export default function Home() {
       console.error('Upload failed:', err);
       setError('Something went wrong. Try again!');
     }
+  };
+
+  return (
+    <>
+      <Head>
+        <title>Freedom of CreAItion</title>
+      </Head>
+      <main style={{ textAlign: 'center', padding: '4rem' }}>
+        <h1>Freedom of CreAItion</h1>
+        <UploadForm onGenerate={handleGenerate} />
+        {error && <p style={{ color: 'red' }}>{error}</p>}
+        <ImageGallery imageUrl={imageUrl} />
+      </main>
+    </>
+  );
+}
