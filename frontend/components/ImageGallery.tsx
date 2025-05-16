@@ -1,9 +1,7 @@
-// components/ImageGallery.tsx
-
 import React from 'react';
 
 interface ImageGalleryProps {
-  imageUrl: string;
+  imageUrl: string | null;
 }
 
 const ImageGallery: React.FC<ImageGalleryProps> = ({ imageUrl }) => {
@@ -14,13 +12,18 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ imageUrl }) => {
       <h2>Generated Image</h2>
       <img
         src={imageUrl}
-        alt="Generated Result"
+        alt="Generated"
         style={{
-          maxWidth: '90%',
-          height: 'auto',
-          border: '2px solid #333',
-          borderRadius: '12px',
-          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)',
+          maxWidth: '512px',
+          maxHeight: '512px',
+          border: '2px solid #ccc',
+          borderRadius: '8px',
+          boxShadow: '0 2px 10px rgba(0,0,0,0.1)'
+        }}
+        onError={(e) => {
+          const target = e.target as HTMLImageElement;
+          target.alt = "Image failed to load.";
+          target.style.display = "none";
         }}
       />
     </div>
