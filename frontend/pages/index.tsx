@@ -3,7 +3,7 @@ import { useState } from 'react';
 import UploadForm from '../components/UploadForm';
 import ImageGallery from '../components/ImageGallery';
 
-const API_URL = "https://freedom-of-creaition.onrender.com";
+const API_URL = process.env.NEXT_PUBLIC_GENERATE_API_URL || "https://freedom-of-creaition.onrender.com";
 
 export default function Home() {
   const [imageUrl, setImageUrl] = useState<string | null>(null);
@@ -29,7 +29,8 @@ export default function Home() {
       const data = await res.json();
       console.log('Response from backend:', data);
 
-      setImageUrl(data.image_url || null);
+      // Prepend backend base URL to relative image path
+      setImageUrl(`${API_URL}${data.image_url}`);
     } catch (err: any) {
       console.error('Upload failed:', err);
       setError('Something went wrong. Try again!');
