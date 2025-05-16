@@ -33,3 +33,4 @@ export default function Home() {
     } catch (err: any) {
       console.error('Upload failed:', err);
       setError('Something went wrong. Try again!');
+    }
