@@ -5,18 +5,33 @@ import ImageGallery from '../components/ImageGallery';
 
 export default function Home() {
   const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const handleGenerate = async (file: File) => {
+    setImageUrl(null);
+    setError(null);
+
     const formData = new FormData();
     formData.append('file', file);
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_GENERATE_API_URL}/generate`, {
-      method: 'POST',
-      body: formData
-    });
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_GENERATE_API_URL}/generate`, {
+        method: 'POST',
+        body: formData
+      });
 
-    const data = await res.json();
-    setImageUrl(data.image_url || null);
+      if (!res.ok) {
+        throw new Error(`HTTP ${res.status}`);
+      }
+
+      const data = await res.json();
+      console.log('Response from backend:', data);
+
+      setImageUrl(data.image_url || null);
+    } catch (err: any) {
+      console.error('Upload failed:', err);
+      setError('Something went wrong. Try again!');
+    }
   };
 
   return (
@@ -27,6 +42,7 @@ export default function Home() {
       <main style={{ textAlign: 'center', padding: '4rem' }}>
         <h1>Freedom of CreAItion</h1>
         <UploadForm onGenerate={handleGenerate} />
+        {error && <p style={{ color: 'red' }}>{error}</p>}
         <ImageGallery imageUrl={imageUrl} />
       </main>
     </>
