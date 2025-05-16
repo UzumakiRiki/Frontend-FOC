@@ -1,26 +1,30 @@
-type Props = {
-  imageUrl: string | null;
-};
+// components/ImageGallery.tsx
 
-export default function ImageGallery({ imageUrl }: Props) {
+import React from 'react';
+
+interface ImageGalleryProps {
+  imageUrl: string;
+}
+
+const ImageGallery: React.FC<ImageGalleryProps> = ({ imageUrl }) => {
   if (!imageUrl) return null;
 
   return (
-    <div style={{ marginTop: '2rem', textAlign: 'center' }}>
-      <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1rem' }}>
-        Generated Image
-      </h2>
+    <div style={{ marginTop: '20px', textAlign: 'center' }}>
+      <h2>Generated Image</h2>
       <img
         src={imageUrl}
         alt="Generated Result"
         style={{
-          maxWidth: '100%',
+          maxWidth: '90%',
           height: 'auto',
-          border: '2px solid #444',
+          border: '2px solid #333',
           borderRadius: '12px',
-          boxShadow: '0 4px 10px rgba(0, 0, 0, 0.2)',
+          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)',
         }}
       />
     </div>
   );
-}
+};
+
+export default ImageGallery;
